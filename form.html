@@ -245,7 +245,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
     issueDetail: document.getElementById("issueDetail").value
   };
 
-  fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/30f74b7d2c864da6867c13ed6eeba819/triggers/manual/paths/invoke?api-version=1", {
+  fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/30f74b7d2c864da6867c13ed6eeba819/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sY5BhwgVdQCHYMZ-EDowMEeTHPY64S6Efg79Q7sEE4I", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

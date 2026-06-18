@@ -146,21 +146,18 @@ button {
 
 // QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
-const item = params.get("item");
+const item = params.get("item")?.trim();
 
-/* ✅ 不正チェック */
-if (!item || !item.match(/^PC\d+$/)) {
+/* ✅ 2パターン対応 */
+if (!item || !item.match(/^[A-Za-z0-9]{1,2}(No\.|-)\d{1,2}$/)) {
 
-  // 不正なQR
   document.getElementById("itemDisplay").innerText =
     "⚠ 不正なQRコードです";
 
-  // 入力フォームを無効化
   document.getElementById("form").style.display = "none";
 
 } else {
 
-  // 正常
   document.getElementById("item").value = item;
 
   document.getElementById("itemDisplay").innerText =

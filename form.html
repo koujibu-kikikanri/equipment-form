@@ -15,7 +15,6 @@ h2 {
   font-size: 26px;
 }
 
-/* 入力欄 */
 input, select, textarea {
   font-size: 22px;
   padding: 12px;
@@ -26,7 +25,6 @@ input, select, textarea {
   border-radius: 8px;
 }
 
-/* ボタン */
 button {
   font-size: 24px;
   padding: 15px;
@@ -44,7 +42,6 @@ button:active {
 label {
   font-weight: bold;
 }
-
 </style>
 
 </head>
@@ -58,13 +55,13 @@ label {
 <input type="hidden" id="item">
 
 <label>区分</label>
-<select id="mode">
+<select id="mode" required>
   <option value="">選択してください</option>
   <option value="持出">持出</option>
   <option value="返却">返却</option>
 </select>
 
-<!-- ✅ 持出用 -->
+<!-- 持出 -->
 <div id="carryFields" style="display:none;">
 
   <label>現場名（持出）</label>
@@ -81,7 +78,7 @@ label {
 
 </div>
 
-<!-- ✅ 返却用 -->
+<!-- 返却 -->
 <div id="returnFields" style="display:none;">
 
   <label>現場名（返却）</label>
@@ -112,13 +109,14 @@ label {
 
 <script>
 
-// ✅ QRから備品ID取得
+// QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
 const item = params.get("item");
 document.getElementById("item").value = item;
 
-// ✅ 表示切替
-document.getElementById("mode").addEventListener("change", function(){
+
+// 区分切替
+document.getElementById("mode").addEventListener("change", function () {
   const mode = this.value;
 
   document.getElementById("carryFields").style.display =
@@ -128,27 +126,66 @@ document.getElementById("mode").addEventListener("change", function(){
     (mode === "返却") ? "block" : "none";
 });
 
-// ✅ 不具合詳細表示
-document.getElementById("issueFlag").addEventListener("change", function(){
+
+// 不具合詳細
+document.getElementById("issueFlag").addEventListener("change", function () {
   document.getElementById("issueDetailArea").style.display =
     (this.value === "あり") ? "block" : "none";
 });
 
-// ✅ 送信
-document.getElementById("form").addEventListener("submit", function(e){
+
+// ✅ 未入力チェック
+document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const mode = document.getElementById("mode").value;
+
+  // 共通チェック
+  if (!mode) {
+    alert("区分を選択してください");
+    return;
+  }
+
+  if (mode === "持出") {
+
+    if (!document.getElementById("siteCarry").value ||
+        !document.getElementById("userCarry").value ||
+        !document.getElementById("carryDate").value ||
+        !document.getElementById("returnPlan").value) {
+
+      alert("持出の必須項目を入力してください");
+      return;
+    }
+
+  } else if (mode === "返却") {
+
+    if (!document.getElementById("siteReturn").value ||
+        !document.getElementById("userReturn").value ||
+        !document.getElementById("returnDate").value) {
+
+      alert("返却の必須項目を入力してください");
+      return;
+    }
+
+    if (document.getElementById("issueFlag").value === "あり" &&
+        !document.getElementById("issueDetail").value) {
+
+      alert("不具合内容を入力してください");
+      return;
+    }
+
+  }
+
+  // ✅ 問題なければ送信
   const data = {
     item: item,
-    mode: document.getElementById("mode").value,
+    mode: mode,
 
-    // 持出
     siteCarry: document.getElementById("siteCarry").value,
     userCarry: document.getElementById("userCarry").value,
     carryDate: document.getElementById("carryDate").value,
     returnPlan: document.getElementById("returnPlan").value,
 
-    // 返却
     siteReturn: document.getElementById("siteReturn").value,
     userReturn: document.getElementById("userReturn").value,
     returnDate: document.getElementById("returnDate").value,

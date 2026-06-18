@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>備品管理</title>
+</head>
+<body>
+
+<h2>備品貸出フォーム</h2>
+
+<form id="form">
+
+<!-- 備品ID（自動） -->
+<input type="hidden" id="item">
+
+<!-- 持出 or 返却 -->
+区分：
+<select id="mode">
+  <option value="">選択してください</option>
+  <option value="持出">持出</option>
+  <option value="返却">返却</option>
+</select>
+
+<br><br>
+
+<!-- 共通 -->
+現場名（例：R0大町）：
+<input type="text" id="site"><br><br>
+
+担当者名（例：北陽太郎）：
+<input type="text" id="user"><br><br>
+
+<!-- ✅ 持出用 -->
+<div id="carryFields" style="display:none;">
+  持出日：
+  <input type="date" id="carryDate"><br><br>
+
+  返却予定日：
+  <input type="date" id="returnPlan"><br><br>
+</div>
+
+<!-- ✅ 返却用 -->
+<div id="returnFields" style="display:none;">
+  返却日：
+  <input type="date" id="returnDate"><br><br>
+
+  故障・不具合の有無：
+  <select id="issueFlag">
+    <option value="なし">なし</option>
+    <option value="あり">あり</option>
+  </select><br><br>
+
+  <div id="issueDetailArea" style="display:none;">
+    故障・不具合の詳細な内容：<br>
+    <textarea id="issueDetail"></textarea><br><br>
+  </div>
+</div>
+
+<button type="submit">送信</button>
+
+</form>
+
+<script>
+
+// ✅ QRから備品ID取得
+const params = new URLSearchParams(window.location.search);
+const item = params.get("item");
+document.getElementById("item").value = item;
+
+// ✅ 持出/返却で表示切替
+document.getElementById("mode").addEventListener("change", function(){
+  const mode = this.value;
+
+  document.getElementById("carryFields").style.display = (mode === "持出") ? "block" : "none";
+  document.getElementById("returnFields").style.display = (mode === "返却") ? "block" : "none";
+});
+
+// ✅ 不具合詳細の表示制御
+document.getElementById("issueFlag").addEventListener("change", function(){
+  const val = this.value;
+  document.getElementById("issueDetailArea").style.display = (val === "あり") ? "block" : "none";
+});
+
+// ✅ 送信処理
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const data = {
+    item: item,
+    mode: document.getElementById("mode").value,
+    site: document.getElementById("site").value,
+    user: document.getElementById("user").value,
+    carryDate: document.getElementById("carryDate").value,
+    returnPlan: document.getElementById("returnPlan").value,
+    returnDate: document.getElementById("returnDate").value,
+    issueFlag: document.getElementById("issueFlag").value,
+    issueDetail: document.getElementById("issueDetail").value
+  };
+
+  fetch("ここにPowerAutomateのURL", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  alert("送信しました");
+});
+
+</script>
+
+</body>
+</html>
+

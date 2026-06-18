@@ -6,7 +6,7 @@
 
 <style>
 body {
-  font-size: 20px;            /* ✅ 全体文字を大きく */
+  font-size: 22px;
   font-family: sans-serif;
   padding: 15px;
 }
@@ -15,35 +15,32 @@ h2 {
   font-size: 26px;
 }
 
-/* ✅ 入力欄を大きく */
+/* 入力欄 */
 input, select, textarea {
-  font-size: 20px;
-  padding: 10px;
-  width: 80%;
+  font-size: 22px;
+  padding: 12px;
+  width: 100%;
   margin-top: 5px;
   margin-bottom: 15px;
-
-  /* ✅ 枠を太く＆濃く */
-  border: 2px solid #000;
+  border: 3px solid #000;
   border-radius: 8px;
 }
 
-/* ✅ ボタンを大きく */
+/* ボタン */
 button {
-  font-size: 22px;
-  padding: 12px;
-  width: 80%;
+  font-size: 24px;
+  padding: 15px;
+  width: 100%;
   background-color: #0078D4;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 button:active {
   background-color: #005a9e;
 }
 
-/* ✅ ラベルを見やすく */
 label {
   font-weight: bold;
 }
@@ -67,34 +64,46 @@ label {
   <option value="返却">返却</option>
 </select>
 
-<label>現場名（例：R0大町）</label>
-<input type="text" id="site">
-
-<label>担当者名（例：北陽太郎）</label>
-<input type="text" id="user">
-
+<!-- ✅ 持出用 -->
 <div id="carryFields" style="display:none;">
+
+  <label>現場名（持出）</label>
+  <input type="text" id="siteCarry">
+
+  <label>担当者（持出）</label>
+  <input type="text" id="userCarry">
+
   <label>持出日</label>
   <input type="date" id="carryDate">
 
   <label>返却予定日</label>
   <input type="date" id="returnPlan">
+
 </div>
 
+<!-- ✅ 返却用 -->
 <div id="returnFields" style="display:none;">
+
+  <label>現場名（返却）</label>
+  <input type="text" id="siteReturn">
+
+  <label>担当者（返却）</label>
+  <input type="text" id="userReturn">
+
   <label>返却日</label>
   <input type="date" id="returnDate">
 
-  <label>故障・不具合の有無</label>
+  <label>不具合有無</label>
   <select id="issueFlag">
     <option value="なし">なし</option>
     <option value="あり">あり</option>
   </select>
 
   <div id="issueDetailArea" style="display:none;">
-    <label>故障・不具合の詳細な内容</label>
+    <label>不具合詳細</label>
     <textarea id="issueDetail"></textarea>
   </div>
+
 </div>
 
 <button type="submit">送信</button>
@@ -103,31 +112,45 @@ label {
 
 <script>
 
+// ✅ QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
 const item = params.get("item");
 document.getElementById("item").value = item;
 
+// ✅ 表示切替
 document.getElementById("mode").addEventListener("change", function(){
   const mode = this.value;
-  document.getElementById("carryFields").style.display = (mode === "持出") ? "block" : "none";
-  document.getElementById("returnFields").style.display = (mode === "返却") ? "block" : "none";
+
+  document.getElementById("carryFields").style.display =
+    (mode === "持出") ? "block" : "none";
+
+  document.getElementById("returnFields").style.display =
+    (mode === "返却") ? "block" : "none";
 });
 
+// ✅ 不具合詳細表示
 document.getElementById("issueFlag").addEventListener("change", function(){
   document.getElementById("issueDetailArea").style.display =
     (this.value === "あり") ? "block" : "none";
 });
 
+// ✅ 送信
 document.getElementById("form").addEventListener("submit", function(e){
   e.preventDefault();
 
   const data = {
     item: item,
     mode: document.getElementById("mode").value,
-    site: document.getElementById("site").value,
-    user: document.getElementById("user").value,
+
+    // 持出
+    siteCarry: document.getElementById("siteCarry").value,
+    userCarry: document.getElementById("userCarry").value,
     carryDate: document.getElementById("carryDate").value,
     returnPlan: document.getElementById("returnPlan").value,
+
+    // 返却
+    siteReturn: document.getElementById("siteReturn").value,
+    userReturn: document.getElementById("userReturn").value,
     returnDate: document.getElementById("returnDate").value,
     issueFlag: document.getElementById("issueFlag").value,
     issueDetail: document.getElementById("issueDetail").value
@@ -135,7 +158,9 @@ document.getElementById("form").addEventListener("submit", function(e){
 
   fetch("ここにPowerAutomateのURL", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(data)
   });
 

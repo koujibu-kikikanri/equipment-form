@@ -146,10 +146,24 @@ button {
 
 // QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
-const item = params.get("item");
+const item = params.get("item")?.trim();
 
-document.getElementById("itemDisplay").innerText =
-  "DEBUG：" + item;
+/* ✅ 2パターン対応 */
+if (!item || !item.match(/^[A-Za-z0-9]{1,2}(No\.|-)\d{1,2}$/)) {
+
+  document.getElementById("itemDisplay").innerText =
+    "⚠ 不正なQRコードです";
+
+  document.getElementById("form").style.display = "none";
+
+} else {
+
+  document.getElementById("item").value = item;
+
+  document.getElementById("itemDisplay").innerText =
+    "対象機器：" + item;
+}
+
 
 
 

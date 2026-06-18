@@ -62,13 +62,28 @@ button {
   /* 影をつける */
   box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 }
+
+
+#itemDisplay {
+  font-size: 26px;
+  font-weight: bold;
+  padding: 10px;
+  border: 2px solid #000;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  margin-bottom: 15px;
+}
+
+
 </style>
 
 </head>
 
 <body>
 
-<h2>備品管理フォーム</h2>
+<h2>工事部機器管理フォーム</h2>
+
+<p id="itemDisplay"></p>  <!-- 👈追加 -->
 
 <form id="form">
 
@@ -110,14 +125,14 @@ button {
   <label>返却日</label>
   <input type="date" id="returnDate">
 
-  <label>不具合有無</label>
+  <label>故障・不具合の有無</label>
   <select id="issueFlag">
     <option value="なし">なし</option>
     <option value="あり">あり</option>
   </select>
 
   <div id="issueDetailArea" style="display:none;">
-    <label>不具合詳細</label>
+    <label>故障・不具合の詳細な内容</label>
     <textarea id="issueDetail"></textarea>
   </div>
 
@@ -132,7 +147,26 @@ button {
 // QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
 const item = params.get("item");
-document.getElementById("item").value = item;
+
+/* ✅ 不正チェック */
+if (!item || !item.match(/^PC\d+$/)) {
+
+  // 不正なQR
+  document.getElementById("itemDisplay").innerText =
+    "⚠ 不正なQRコードです";
+
+  // 入力フォームを無効化
+  document.getElementById("form").style.display = "none";
+
+} else {
+
+  // 正常
+  document.getElementById("item").value = item;
+
+  document.getElementById("itemDisplay").innerText =
+    "対象機器：" + item;
+}
+
 
 
 // 区分切替

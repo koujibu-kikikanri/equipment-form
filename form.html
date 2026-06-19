@@ -409,13 +409,18 @@ document.getElementById("form").addEventListener("submit", function (e) {
     },
     body: JSON.stringify(data)
   })
+
+
   .then(response => {
-    alert("送信OK：" + response.status);
+    if (response.ok) {
+      alert("送信成功");
+    } else {
+      alert("エラー：" + response.status);
+    }
   })
   .catch(error => {
-    alert("エラー：" + error);
+    alert("通信エラー：" + error);
   });
-
 });
 
 </script>

@@ -144,11 +144,165 @@ button {
 
 <script>
 
+// ✅ 機器マスタ（Excelから生成して貼る）
+const itemMaster = {
+"CH-1": { name: "チャプマンフラスコ", category: "A" },
+"CH-2": { name: "チャプマンフラスコ", category: "A" },
+"CH-3": { name: "チャプマンフラスコ", category: "A" },
+"TF-1": { name: "テーブルフロー", category: "A" },
+"TF-2": { name: "テーブルフロー", category: "A" },
+"TF-3": { name: "テーブルフロー", category: "A" },
+"TF-4": { name: "テーブルフロー", category: "A" },
+"TF-5": { name: "テーブルフロー", category: "A" },
+"DK-1": { name: "土壌硬度計", category: "A" },
+"DK-2": { name: "土壌硬度計", category: "A" },
+"DK-3": { name: "土壌硬度計", category: "A" },
+"DK-4": { name: "土壌硬度計", category: "A" },
+"pH-1": { name: "pH測定器", category: "A" },
+"pH-3": { name: "pH測定器", category: "A" },
+"pH-5": { name: "pH測定器", category: "A" },
+"pH-6": { name: "pH測定器", category: "A" },
+"WA-1": { name: "ワイヤーネット確認試験器具", category: "A" },
+"CR-1": { name: "Cリンガー", category: "A" },
+"CR-3": { name: "Cリンガー", category: "A" },
+"CR-4": { name: "Cリンガー", category: "A" },
+"KB-1": { name: "検尺棒", category: "B" },
+"KB-2": { name: "検尺棒", category: "B" },
+"KB-3": { name: "検尺棒", category: "B" },
+"KB-4": { name: "検尺棒", category: "B" },
+"KB-5": { name: "検尺棒", category: "B" },
+"KB-6": { name: "検尺棒", category: "B" },
+"KB-7": { name: "検尺棒", category: "B" },
+"KB-8": { name: "検尺棒", category: "B" },
+"KB-9": { name: "検尺棒", category: "B" },
+"KB-10": { name: "検尺棒", category: "B" },
+"KB-11": { name: "検尺棒", category: "B" },
+"KB-12": { name: "検尺棒", category: "B" },
+"KB-13": { name: "検尺棒", category: "B" },
+"KB-14": { name: "検尺棒", category: "B" },
+"KB-15": { name: "検尺棒", category: "B" },
+"P-1": { name: "センターホールジャッキ", category: "B" },
+"P-2": { name: "センターホールジャッキ", category: "B" },
+"P-3": { name: "センターホールジャッキ", category: "B" },
+"P-4": { name: "センターホールジャッキ", category: "B" },
+"P-5": { name: "センターホールジャッキ", category: "B" },
+"P-6": { name: "センターホールジャッキ", category: "B" },
+"J-2": { name: "軽量ジャッキ", category: "B" },
+"J-3": { name: "ユニットジャッキ", category: "B" },
+"TR-1": { name: "トルクレンチ", category: "B" },
+"TR-2": { name: "トルクレンチ", category: "B" },
+"TR-3": { name: "トルクレンチ", category: "B" },
+"TR-4": { name: "トルクレンチ", category: "B" },
+"J-1": { name: "トルクイック", category: "B" },
+"DG-1": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-2": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-3": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-4": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-5": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-6": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-7": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-8": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-9": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-10": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"DG-11": { name: "デジタル、ダイヤルゲージ", category: "B" },
+"TPNo.1": { name: "手押しポンプ", category: "B" },
+"TPNo.2": { name: "手押しポンプ", category: "B" },
+"FC-1": { name: "フローコーン", category: "B" },
+"FC-2": { name: "フローコーン", category: "B" },
+"FC-3": { name: "フローコーン", category: "B" },
+"FC-4": { name: "フローコーン", category: "B" },
+"FC-5": { name: "フローコーン", category: "B" },
+"FC-6": { name: "フローコーン", category: "B" },
+"FC-7": { name: "フローコーン", category: "B" },
+"TS-1": { name: "トータルステーション", category: "C" },
+"TS-2": { name: "トータルステーション", category: "C" },
+"TS-3": { name: "トータルステーション", category: "C" },
+"TS-4": { name: "トータルステーション", category: "C" },
+"TS-5": { name: "トータルステーション", category: "C" },
+"TS-6": { name: "トータルステーション", category: "C" },
+"TS-7": { name: "トータルステーション", category: "C" },
+"TS-8": { name: "トータルステーション", category: "C" },
+"TS-9": { name: "トータルステーション", category: "C" },
+"AL-1": { name: "レベル", category: "C" },
+"AL-3": { name: "レベル", category: "C" },
+"AL-6": { name: "レベル", category: "C" },
+"AL-7": { name: "レベル", category: "C" },
+"AL-8": { name: "レベル", category: "C" },
+"AL-9": { name: "レベル", category: "C" },
+"AL-10": { name: "レベル", category: "C" },
+"AL-11": { name: "レベル", category: "C" },
+"AL-12": { name: "レベル", category: "C" },
+"AL-13": { name: "レベル", category: "C" },
+"AL-14": { name: "レベル", category: "C" },
+"AL-15": { name: "レベル", category: "C" },
+"AL-16": { name: "レベル", category: "C" },
+"AL-18": { name: "レベル", category: "C" },
+"AL-19": { name: "レベル", category: "C" },
+"AL-20": { name: "レベル", category: "C" },
+"AL-21": { name: "レベル", category: "C" },
+"AL-22": { name: "レベル", category: "C" },
+"AL-23": { name: "レベル", category: "C" },
+"IPNo.1": { name: "iPad", category: "C" },
+"LRNo.1": { name: "LRTK（iPhone、レシーバー）", category: "C" },
+"2KNo.1": { name: "2k発電機", category: "D" },
+"HRNo.1": { name: "ハンマードリル（充電式）", category: "D" },
+"IDNo.1": { name: "インパクトドライバー（充電式）", category: "D" },
+"IDNo.2": { name: "インパクトドライバー（充電式）", category: "D" },
+"IDNo.3": { name: "インパクトドライバー（充電式）", category: "D" },
+"IDNo.4": { name: "インパクトドライバー（充電式）", category: "D" },
+"BSNo.1": { name: "ベビーサンダー（充電式）", category: "D" },
+"BSNo.2": { name: "ベビーサンダー（充電式）", category: "D" },
+"RSNo.1": { name: "レシプロソー（充電式）", category: "D" },
+"MNNo.1": { name: "丸ノコ（充電式）", category: "D" },
+"BVNo.1": { name: "棒バイブレーター（充電式）", category: "D" },
+"TCNo.1": { name: "高枝チェーンソー（充電式）", category: "D" },
+"BTNo.1": { name: "バッテリー18V 2個 充電器セット", category: "D" },
+"HMNo.1": { name: "ハンドミキサー", category: "D" },
+"HMNo.2": { name: "ハンドミキサー", category: "D" },
+"OTNo.1": { name: "おんどとり", category: "E" },
+"WT-1": { name: "無線機", category: "E" },
+"WT-2": { name: "無線機", category: "E" },
+"WT-3": { name: "無線機", category: "E" },
+"WT-4": { name: "無線機", category: "E" },
+"WT-5": { name: "無線機", category: "E" },
+"WT-6": { name: "無線機", category: "E" },
+"WT-7": { name: "無線機", category: "E" },
+"WT-11": { name: "無線機", category: "E" },
+"WT-12": { name: "無線機", category: "E" },
+"WT-13": { name: "無線機", category: "E" },
+"WT-14": { name: "無線機", category: "E" },
+"W-1": { name: "秤", category: "E" },
+"W-2": { name: "秤", category: "E" },
+"W-3": { name: "秤", category: "E" },
+"W-4": { name: "秤", category: "E" },
+"W-5": { name: "秤", category: "E" },
+"W-6": { name: "秤", category: "E" },
+"W-7": { name: "秤", category: "E" },
+"W-8": { name: "秤", category: "E" },
+"W-9": { name: "秤", category: "E" },
+"W-11": { name: "秤", category: "E" },
+"W-12": { name: "秤", category: "E" },
+"W-13": { name: "秤", category: "E" },
+"WCNo.1": { name: "W/Cミーター", category: "E" },
+"SH-1": { name: "シュミットハンマー", category: "E" },
+"SH-2": { name: "シュミットハンマー", category: "E" },
+"SH-3": { name: "シュミットハンマー", category: "E" },
+"DM": { name: "電磁式膜厚計", category: "E" },
+"SU-1": { name: "水位計", category: "E" },
+"SO-1": { name: "騒音計", category: "E" },
+"D-1": { name: "濁度計", category: "E" },
+"D-2": { name: "濁度計", category: "E" },
+
+};
+
+
 // QRから備品ID取得
 const params = new URLSearchParams(window.location.search);
 const item = params.get("item")?.trim();
 
-/* ✅ 2パターン対応 */
+let info = {};
+
+// ✅ QRチェック
 if (!item || !item.match(/^[A-Za-z0-9]{1,2}(No\.|-)\d{1,2}$/)) {
 
   document.getElementById("itemDisplay").innerText =
@@ -160,10 +314,13 @@ if (!item || !item.match(/^[A-Za-z0-9]{1,2}(No\.|-)\d{1,2}$/)) {
 
   document.getElementById("item").value = item;
 
-  document.getElementById("itemDisplay").innerText =
-    "対象機器：" + item;
-}
+  info = itemMaster[item] || {};
 
+  const name = info.name || "不明機器";
+
+  document.getElementById("itemDisplay").innerText =
+    "対象機器：" + item + "（" + name + "）";
+}
 
 
 
@@ -186,13 +343,12 @@ document.getElementById("issueFlag").addEventListener("change", function () {
 });
 
 
-// ✅ 未入力チェック
+// ✅ 未入力チェック＋送信
 document.getElementById("form").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const mode = document.getElementById("mode").value;
 
-  // 共通チェック
   if (!mode) {
     alert("区分を選択してください");
     return;
@@ -209,7 +365,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
       return;
     }
 
-  } else if (mode === "返却") {
+  } else {
 
     if (!document.getElementById("siteReturn").value ||
         !document.getElementById("userReturn").value ||
@@ -225,12 +381,13 @@ document.getElementById("form").addEventListener("submit", function (e) {
       alert("不具合内容を入力してください");
       return;
     }
-
   }
 
-  // ✅ 問題なければ送信
+  // ✅ 送信データ（ここが強化された）
   const data = {
     item: item,
+    name: info.name || "",
+    category: info.category || "",
     mode: mode,
 
     siteCarry: document.getElementById("siteCarry").value,
@@ -245,23 +402,20 @@ document.getElementById("form").addEventListener("submit", function (e) {
     issueDetail: document.getElementById("issueDetail").value
   };
 
-  fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/30f74b7d2c864da6867c13ed6eeba819/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sY5BhwgVdQCHYMZ-EDowMEeTHPY64S6Efg79Q7sEE4I", {
+  fetch("YOUR_FLOW_URL_HERE", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    alert("送信OK：" + response.status);
+  })
+  .catch(error => {
+    alert("エラー：" + error);
+  });
 
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-})
-.then(response => {
-  alert("送信OK：" + response.status);
-})
-.catch(error => {
-  alert("エラー：" + error);
-});
-
-
-  alert("送信しました");
 });
 
 </script>

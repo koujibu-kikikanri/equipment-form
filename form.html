@@ -344,7 +344,7 @@ document.getElementById("issueFlag").addEventListener("change", function () {
 
 
 // ✅ 未入力チェック＋送信
-document.getElementById("form").addEventListener("submit", function (e) {
+document.getElementById("form").addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const mode = document.getElementById("mode").value;

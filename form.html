@@ -347,9 +347,14 @@ document.getElementById("issueFlag").addEventListener("change", function () {
 document.getElementById("form").addEventListener("submit", async function (e) {
   e.preventDefault();
 
+  // ✅ ここに追加（送信直後に表示）
+  document.getElementById("loading").style.display = "block";
+
   const mode = document.getElementById("mode").value;
 
+
   if (!mode) {
+    document.getElementById("loading").style.display = "none"; 
     alert("区分を選択してください");
     return;
   }
@@ -360,7 +365,7 @@ document.getElementById("form").addEventListener("submit", async function (e) {
         !document.getElementById("userCarry").value ||
         !document.getElementById("carryDate").value ||
         !document.getElementById("returnPlan").value) {
-
+      document.getElementById("loading").style.display = "none";
       alert("持出の必須項目を入力してください");
       return;
     }
@@ -370,14 +375,14 @@ document.getElementById("form").addEventListener("submit", async function (e) {
     if (!document.getElementById("siteReturn").value ||
         !document.getElementById("userReturn").value ||
         !document.getElementById("returnDate").value) {
-
+      document.getElementById("loading").style.display = "none";
       alert("返却の必須項目を入力してください");
       return;
     }
 
     if (document.getElementById("issueFlag").value === "あり" &&
         !document.getElementById("issueDetail").value) {
-
+      document.getElementById("loading").style.display = "none";
       alert("不具合内容を入力してください");
       return;
     }
@@ -419,12 +424,15 @@ try {
       );
 
       if (!ok) {
+        document.getElementById("loading").style.display = "none";
         return;
       }
+
     }
   }
 
 } catch (error) {
+  document.getElementById("loading").style.display = "none";
   alert("状態確認に失敗しました");
   return;
 }
@@ -459,6 +467,7 @@ try {
 
 
   .then(response => {
+    document.getElementById("loading").style.display = "none";
     if (response.ok) {
       alert("送信成功");
     } else {
@@ -471,6 +480,23 @@ try {
 });
 
 </script>
+
+<div id="loading" style="
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:rgba(0,0,0,0.5);
+  color:white;
+  font-size:28px;
+  text-align:center;
+  padding-top:40%;
+  z-index:9999;
+">
+  処理中です...しばらくお待ちください
+</div>
 
 </body>
 </html>

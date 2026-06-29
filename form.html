@@ -405,29 +405,22 @@ try {
 
     const normalStates = ["在庫有", "持出中"];
 
-    // ✅ ① undefined → エラー扱い（システム異常）
+    // ✅ undefined → エラー（ここだけは止める）
     if (currentStatus === undefined) {
       alert("状態の取得に失敗しました。管理者に連絡してください。");
       return;
     }
 
-    // ✅ ② 空欄 → スルー（試験運用）
-    if (currentStatus === "") {
-      return;
-    }
+    // ✅ 正常以外のみ確認（空欄はここで自然にスルーされる）
+    if (currentStatus && !normalStates.includes(currentStatus)) {
 
-    // ✅ ③ 正常状態 → スルー
-    if (normalStates.includes(currentStatus)) {
-      return;
-    }
+      const ok = confirm(
+        `この機器の現在の状態は「${currentStatus}」になっています。\nこのまま持ち出しますか？`
+      );
 
-    // ✅ ④ その他（校正中・不具合など）→ 確認
-    const ok = confirm(
-      `この機器の現在の状態は「${currentStatus}」になっています。\nこのまま持ち出しますか？`
-    );
-
-    if (!ok) {
-      return;
+      if (!ok) {
+        return;
+      }
     }
   }
 

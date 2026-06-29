@@ -384,7 +384,7 @@ document.getElementById("form").addEventListener("submit", async function (e) {
   }
 
 
-  // ✅ 状態判定
+// ✅ 状態判定
 try {
 
   const checkResponse = await fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/1f5e4045f22d4f8aaf1e797433e35167/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=R9iss2F6xwWbBOO2Nyi7HckyVx65IERg2iZnl1FMvAY", {
@@ -405,15 +405,29 @@ try {
 
     const normalStates = ["在庫有", "持出中"];
 
-    if (!normalStates.includes(currentStatus)) {
+    // ✅ ① undefined → エラー扱い（システム異常）
+    if (currentStatus === undefined) {
+      alert("状態の取得に失敗しました。管理者に連絡してください。");
+      return;
+    }
 
-      const ok = confirm(
-        `この機器の現在の状態は「${currentStatus}」になっています。\nこのまま持ち出しますか？`
-      );
+    // ✅ ② 空欄 → スルー（試験運用）
+    if (currentStatus === "") {
+      return;
+    }
 
-      if (!ok) {
-        return;
-      }
+    // ✅ ③ 正常状態 → スルー
+    if (normalStates.includes(currentStatus)) {
+      return;
+    }
+
+    // ✅ ④ その他（校正中・不具合など）→ 確認
+    const ok = confirm(
+      `この機器の現在の状態は「${currentStatus}」になっています。\nこのまま持ち出しますか？`
+    );
+
+    if (!ok) {
+      return;
     }
   }
 
@@ -421,6 +435,7 @@ try {
   alert("状態確認に失敗しました");
   return;
 }
+
 
   // ✅ 送信データ（ここが強化された）
   const data = {

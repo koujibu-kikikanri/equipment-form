@@ -483,7 +483,7 @@ try {
   .then(response => {
     document.getElementById("loading").style.display = "none";
     if (response.ok) {
-      alert("送信成功");
+       window.location.href = "complete.html";
     } else {
       alert("エラー：" + response.status);
     }

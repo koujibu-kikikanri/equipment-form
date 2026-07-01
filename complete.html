@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>送信完了</title>
+
+<!-- キャッシュ防止（戻る対策） -->
+<meta http-equiv="Cache-Control" content="no-store">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<style>
+body {
+  font-family: sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h1 {
+  color: #0078D4;
+  font-size: 28px;
+}
+
+p {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+button {
+  margin-top: 30px;
+  font-size: 22px;
+  padding: 15px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: #0078D4;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>✅ 送信完了</h1>
+
+  <p>
+    送信が完了しました。<br>
+  </p>
+
+  <button onclick="goForm()">新しく入力する</button>
+
+</div>
+
+<script>
+// フォームページへ戻る（必要に応じてURL変更）
+function goForm() {
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

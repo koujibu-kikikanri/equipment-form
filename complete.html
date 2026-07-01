@@ -24,7 +24,7 @@ body {
   max-width: 500px;
   margin: auto;
   background: white;
-  padding: 30px;
+  padding: 40px 30px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
@@ -32,23 +32,12 @@ body {
 h1 {
   color: #0078D4;
   font-size: 28px;
+  margin-bottom: 20px;
 }
 
 p {
   font-size: 20px;
-  margin-top: 20px;
-}
-
-button {
-  margin-top: 30px;
-  font-size: 22px;
-  padding: 15px;
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  background-color: #0078D4;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  line-height: 1.6;
 }
 </style>
 
@@ -61,19 +50,15 @@ button {
   <h1>✅ 送信完了</h1>
 
   <p>
-    送信が完了しました。<br>
+    データの送信が完了しました。<br>
+    ご協力ありがとうございました。
   </p>
 
-  <button onclick="goForm()">新しく入力する</button>
+  <p style="margin-top:30px; font-size:16px; color:#666;">
+    続けて入力する場合は、再度QRコードを読み取ってください。
+  </p>
 
 </div>
-
-<script>
-// フォームページへ戻る（必要に応じてURL変更）
-function goForm() {
-  window.location.href = "index.html";
-}
-</script>
 
 </body>
 </html>

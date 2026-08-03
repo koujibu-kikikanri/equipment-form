@@ -467,6 +467,26 @@ try {
   return;
 }
 
+let photoBase64 = "";
+
+const photoFile =
+  document.getElementById("issuePhoto").files[0];
+
+if (photoFile) {
+
+  photoBase64 = await new Promise(function(resolve) {
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      resolve(reader.result);
+    };
+
+    reader.readAsDataURL(photoFile);
+
+  });
+
+}
 
   // ✅ 送信データ（ここが強化された）
   const data = {

@@ -150,15 +150,6 @@ button {
     <textarea id="issueDetail"></textarea>
   </div>
 
-  <div id="photoArea" style="display:none;">
-    <label>不具合写真</label>
-    <input
-      type="file"
-      id="issuePhoto"
-      accept="image/*"
-      capture="environment">
-  </div>
-
 </div>
 
 <button type="submit">送信</button>
@@ -362,26 +353,10 @@ document.getElementById("mode").addEventListener("change", function () {
 
 // 不具合詳細
 document.getElementById("issueFlag").addEventListener("change", function () {
-
-  const hasIssue = this.value === "あり";
-
-  const detailArea =
-    document.getElementById("issueDetailArea");
-
-  const photoArea =
-    document.getElementById("photoArea");
-
-  if(detailArea){
-    detailArea.style.display =
-      hasIssue ? "block" : "none";
-  }
-
-  if(photoArea){
-    photoArea.style.display =
-      hasIssue ? "block" : "none";
-  }
-
+  document.getElementById("issueDetailArea").style.display =
+    (this.value === "あり") ? "block" : "none";
 });
+
 
 // ✅ 未入力チェック＋送信
 document.getElementById("form").addEventListener("submit", async function (e) {
@@ -477,29 +452,8 @@ try {
   return;
 }
 
-  // 画像データ（ここが強化された）
-let photoBase64 = "";
 
-const photoFile =
-  document.getElementById("issuePhoto").files[0];
-
-if (photoFile) {
-
-  photoBase64 = await new Promise((resolve) => {
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.readAsDataURL(photoFile);
-
-  });
-
-}
-
-  // ✅ 送信データ
+  // ✅ 送信データ（ここが強化された）
   const data = {
     item: item,
     name: info.name || "",
@@ -516,7 +470,6 @@ if (photoFile) {
     returnDate: document.getElementById("returnDate").value,
     issueFlag: document.getElementById("issueFlag").value,
     issueDetail: document.getElementById("issueDetail").value
-　　issuePhoto: photoBase64
   };
 
   fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/30f74b7d2c864da6867c13ed6eeba819/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sY5BhwgVdQCHYMZ-EDowMEeTHPY64S6Efg79Q7sEE4I", {

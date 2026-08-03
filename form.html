@@ -150,6 +150,15 @@ button {
     <textarea id="issueDetail"></textarea>
   </div>
 
+  <div id="photoArea" style="display:none;">
+    <label>不具合写真</label>
+    <input
+      type="file"
+      id="issuePhoto"
+      accept="image/*"
+      capture="environment">
+  </div>
+
 </div>
 
 <button type="submit">送信</button>
@@ -353,10 +362,16 @@ document.getElementById("mode").addEventListener("change", function () {
 
 // 不具合詳細
 document.getElementById("issueFlag").addEventListener("change", function () {
-  document.getElementById("issueDetailArea").style.display =
-    (this.value === "あり") ? "block" : "none";
-});
 
+  const hasIssue = this.value === "あり";
+
+  document.getElementById("issueDetailArea").style.display =
+    hasIssue ? "block" : "none";
+
+  document.getElementById("photoArea").style.display =
+    hasIssue ? "block" : "none";
+
+});
 
 // ✅ 未入力チェック＋送信
 document.getElementById("form").addEventListener("submit", async function (e) {

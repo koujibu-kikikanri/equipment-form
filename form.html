@@ -469,21 +469,15 @@ try {
 
 let photoBase64 = "";
 
-const photoFile = document.getElementById("issuePhoto").files[0];
+const photoInput = document.getElementById("issuePhoto");
 
-if (photoFile) {
+if (
+  photoInput &&
+  photoInput.files &&
+  photoInput.files.length > 0
+) {
 
-  photoBase64 = await new Promise((resolve) => {
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(reader.result);
-    };
-
-    reader.readAsDataURL(photoFile);
-
-  });
+  photoBase64 = "PHOTO_ATTACHED";
 
 }
 
@@ -503,7 +497,7 @@ if (photoFile) {
     userReturn: document.getElementById("userReturn").value,
     returnDate: document.getElementById("returnDate").value,
     issueFlag: document.getElementById("issueFlag").value,
-    issueDetail: document.getElementById("issueDetail").value
+    issueDetail: document.getElementById("issueDetail").value,
 　　issuePhoto: photoBase64
   };
 

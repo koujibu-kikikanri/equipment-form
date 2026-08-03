@@ -166,6 +166,16 @@ button {
 
 <script>
 
+window.onerror = function(msg, url, line, col, err) {
+  alert(
+    "JavaScriptエラー\n" +
+    msg +
+    "\n行:" + line +
+    "\n列:" + col
+  );
+};
+
+
 // ✅ 機器マスタ（Excelから生成して貼る）
 const itemMaster = {
 "CH-1": { name: "チャプマンフラスコ", category: "A" },

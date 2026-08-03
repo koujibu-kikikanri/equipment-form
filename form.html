@@ -149,6 +149,7 @@ button {
     <label>故障・不具合の詳細な内容</label>
     <textarea id="issueDetail"></textarea>
   </div>
+
   <div id="photoArea" style="display:none;">
     <label>不具合写真</label>
     <input
@@ -381,7 +382,6 @@ document.getElementById("issueFlag").addEventListener("change", function () {
   }
 
 });
-
 
 // ✅ 未入力チェック＋送信
 document.getElementById("form").addEventListener("submit", async function (e) {

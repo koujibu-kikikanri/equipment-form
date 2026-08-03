@@ -477,7 +477,17 @@ if (
   photoInput.files.length > 0
 ) {
 
-  photoBase64 = "PHOTO_ATTACHED";
+  photoBase64 = await new Promise(function(resolve) {
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      resolve(reader.result);
+    };
+
+    reader.readAsDataURL(photoInput.files[0]);
+
+  });
 
 }
 

@@ -364,11 +364,21 @@ document.getElementById("issueFlag").addEventListener("change", function () {
 
   const hasIssue = this.value === "あり";
 
-  document.getElementById("issueDetailArea").style.display =
-    hasIssue ? "block" : "none";
+  const detailArea =
+    document.getElementById("issueDetailArea");
 
-  document.getElementById("photoArea").style.display =
-    hasIssue ? "block" : "none";
+  const photoArea =
+    document.getElementById("photoArea");
+
+  if(detailArea){
+    detailArea.style.display =
+      hasIssue ? "block" : "none";
+  }
+
+  if(photoArea){
+    photoArea.style.display =
+      hasIssue ? "block" : "none";
+  }
 
 });
 

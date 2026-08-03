@@ -149,14 +149,6 @@ button {
     <label>故障・不具合の詳細な内容</label>
     <textarea id="issueDetail"></textarea>
   </div>
-  <div id="photoArea" style="display:none;">
-    <label>不具合写真</label>
-    <input
-      type="file"
-      id="issuePhoto"
-      accept="image/*"
-      capture="environment">
-  </div>
 
 </div>
 
@@ -165,16 +157,6 @@ button {
 </form>
 
 <script>
-
-window.onerror = function(msg, url, line, col, err) {
-  alert(
-    "JavaScriptエラー\n" +
-    msg +
-    "\n行:" + line +
-    "\n列:" + col
-  );
-};
-
 
 // ✅ 機器マスタ（Excelから生成して貼る）
 const itemMaster = {
@@ -369,17 +351,10 @@ document.getElementById("mode").addEventListener("change", function () {
 });
 
 
-// 不具合詳細＋写真
+// 不具合詳細
 document.getElementById("issueFlag").addEventListener("change", function () {
-
-  const hasIssue = (this.value === "あり");
-
   document.getElementById("issueDetailArea").style.display =
-    hasIssue ? "block" : "none";
-
-  document.getElementById("photoArea").style.display =
-    hasIssue ? "block" : "none";
-
+    (this.value === "あり") ? "block" : "none";
 });
 
 
@@ -477,6 +452,7 @@ try {
   return;
 }
 
+
   // ✅ 送信データ（ここが強化された）
   const data = {
     item: item,
@@ -494,7 +470,6 @@ try {
     returnDate: document.getElementById("returnDate").value,
     issueFlag: document.getElementById("issueFlag").value,
     issueDetail: document.getElementById("issueDetail").value
-    issuePhoto: photoBase64
   };
 
   fetch("https://default0f53725a8c9b48c08dc9f6ef78645c.2a.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/30f74b7d2c864da6867c13ed6eeba819/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sY5BhwgVdQCHYMZ-EDowMEeTHPY64S6Efg79Q7sEE4I", {

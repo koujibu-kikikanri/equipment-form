@@ -478,17 +478,32 @@ if (
   photoInput.files.length > 0
 ) {
 
-  photoBase64 = await new Promise(function(resolve) {
+  try {
 
-    const reader = new FileReader();
+    photoBase64 = await new Promise(function(resolve, reject) {
 
-    reader.onload = function() {
-      resolve(reader.result);
-    };
+      const reader = new FileReader();
 
-    reader.readAsDataURL(photoInput.files[0]);
+      reader.onload = function() {
+        resolve(reader.result);
+      };
 
-  });
+      reader.onerror = function() {
+        reject(new Error("画像の読み込みに失敗しました"));
+      };
+
+      reader.readAsDataURL(photoInput.files[0]);
+
+    });
+
+  } catch (error) {
+
+    document.getElementById("loading").style.display = "none";
+
+    alert("画像の読み込みに失敗しました。再度撮影してください。");
+
+    return;
+  }
 
 }
 
